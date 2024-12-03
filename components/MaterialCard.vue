@@ -3,6 +3,7 @@ const props = defineProps({
   modelValue: {
     default() {
       return {
+        id: "",
         brand: "",
         model: "",
         sku: "",
@@ -14,14 +15,18 @@ const props = defineProps({
   },
 });
 
-const materialData = ref(props.modelValue);
+const material = ref(props.modelValue);
 
-const emitter = defineEmits(["update:modelValue"]);
+const emitter = defineEmits(["update:modelValue", "remove"]);
+
+const handleRemove = () => {
+  emitter("remove", material.value.id);
+};
 
 watch(
-  materialData,
+  material,
   (newData, oldData) => {
-    emitter("update:modelValue", materialData);
+    emitter("update:modelValue", material);
   },
   { deep: true }
 );
@@ -29,13 +34,20 @@ watch(
 <template>
   <div class="md:hidden space-y-4">
     <div class="bg-white shadow-md rounded-lg p-4 border border-gray-300">
+      <button
+        type="button"
+        class="w-8 h-8 flex justify-center items-center rounded-full bg-red-600 text-white mb-4"
+        @click="handleRemove"
+      >
+        <Icon name="material-symbols-light:delete" size="18" />
+      </button>
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-700">Brand</label>
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="materialData.brand"
+            v-model="material.brand"
           />
         </div>
         <div>
@@ -43,7 +55,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="materialData.model"
+            v-model="material.model"
           />
         </div>
         <div>
@@ -51,7 +63,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="materialData.sku"
+            v-model="material.sku"
           />
         </div>
         <div>
@@ -59,7 +71,7 @@ watch(
           <input
             type="number"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="materialData.quantity"
+            v-model="material.quantity"
           />
         </div>
         <div class="col-span-2">
@@ -67,7 +79,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="materialData.description"
+            v-model="material.description"
           />
         </div>
         <div class="col-span-2">
@@ -75,7 +87,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="materialData.observations"
+            v-model="material.observations"
           />
         </div>
       </div>

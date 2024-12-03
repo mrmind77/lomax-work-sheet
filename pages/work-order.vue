@@ -13,6 +13,7 @@ const workOrder = ref({
   },
   materials: [
     {
+      id: "",
       brand: "",
       model: "",
       sku: "",
@@ -22,7 +23,15 @@ const workOrder = ref({
     },
   ],
   assistants: [],
-  tasks: [],
+  tasks: [
+    {
+      id: "",
+      task: "",
+      description: "",
+      status: "",
+      observations: "",
+    },
+  ],
   tests: [],
 });
 
@@ -34,6 +43,21 @@ const addMaterial = () => {
     quantity: "",
     description: "",
     observations: "",
+    id: workOrder.value.materials.length,
+  });
+};
+
+const removeMaterial = (id) => {
+  workOrder.value.materials = workOrder.value.materials.filter((m) => m.id !== id);
+};
+
+const addTask = () => {
+  workOrder.value.tasks.push({
+    task: "",
+    description: "",
+    status: "",
+    observations: "",
+    id: workOrder.value.materials.length,
   });
 };
 </script>
@@ -63,44 +87,34 @@ const addMaterial = () => {
         </h2>
         <div class="overflow-x-auto">
           <!-- For desktop -->
-          <MaterialTable v-model="workOrder.materials"/>
+          <MaterialTable v-model="workOrder.materials" />
           <!-- For mobile -->
           <MaterialCard
             v-for="(material, index) in workOrder.materials"
             :key="`material_card_${index}`"
             v-model="workOrder.materials[index]"
             class="mt-4"
+            v-on:remove="removeMaterial"
           />
         </div>
       </div>
 
       <div v-if="workOrder.head.workType === 'support'" class="space-y-4">
-        <h2 class="text-primary text-lg font-bold">Tasks</h2>
-        <table class="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th class="border border-gray-300 p-2">Task</th>
-              <th class="border border-gray-300 p-2">Description</th>
-              <th class="border border-gray-300 p-2">Observation</th>
-              <th class="border border-gray-300 p-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td>
-                <select class="border border-gray-300 p-2">
-                  <option value="done">Done</option>
-                  <option value="pending">Pending</option>
-                  <option value="canceled">Canceled</option>
-                  <option value="in-progress">In Progress</option>
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 class="text-primary text-lg font-bold flex justify-between">
+          Tasks
+          <button type="button" class="bg-primary text-white rounded-full w-8 h-8 justify-center items-center">
+            <Icon name="material-symbols:add-task-rounded" size="18" />
+          </button>
+        </h2>
+        <div class="overflow-x-auto">
+          <TaskTable v-model="workOrder.tasks" />
+
+          <TaskCard
+            v-for="(task, index) in workOrder.tasks"
+            :key="`task_card_${index}`"
+            v-model="workOrder.tasks[index]"
+          />
+        </div>
       </div>
 
       <div v-if="workOrder.head.workType === 'capacitation'" class="space-y-4">
