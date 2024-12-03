@@ -6,4 +6,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: ["@nuxt/icon", "@nuxtjs/tailwindcss"],
+  tailwindcss: {
+    cssPath: ["~/assets/css/tailwind.css", { injectPosition: "first" }],
+    configPath: "tailwind.config",
+    exposeConfig: {
+      level: 2,
+    },
+    config: {},
+    viewer: true,
+  },
 });

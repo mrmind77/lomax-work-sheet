@@ -1,6 +1,11 @@
 <script setup>
 definePageMeta({
-  name: "Hoja de Trabajo",
+  name: "Inicio",
 });
 </script>
-<template></template>
+<template>
+  <div class="div">
+    <!-- TODO -->
+    <!-- Agregar opciones para ver/editar hojas de trabajo -->
+  </div>
+</template>
