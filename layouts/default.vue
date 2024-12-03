@@ -12,7 +12,7 @@ import LomaxLogo from "~/assets/logo-lomax-10aniv.png";
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto py-8">
+    <main class="flex-grow container mx-auto py-8 w-full md:w-4/5">
       <NuxtPage />
     </main>
 
