@@ -63,7 +63,7 @@ const addMaterial = () => {
         </h2>
         <div class="overflow-x-auto">
           <!-- For desktop -->
-          <MaterialTable />
+          <MaterialTable v-model="workOrder.materials"/>
           <!-- For mobile -->
           <MaterialCard
             v-for="(material, index) in workOrder.materials"
