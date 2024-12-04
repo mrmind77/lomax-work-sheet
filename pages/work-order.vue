@@ -60,6 +60,10 @@ const addTask = () => {
     id: workOrder.value.materials.length,
   });
 };
+
+const removeTask = (id) => {
+  workOrder.value.tasks = workOrder.value.tasks.filter((t) => t.id !== id);
+};
 </script>
 <template>
   <div class="bg-background min-h-screen p-4">
@@ -113,6 +117,7 @@ const addTask = () => {
             v-for="(task, index) in workOrder.tasks"
             :key="`task_card_${index}`"
             v-model="workOrder.tasks[index]"
+            v-on:remove="removeTask"
           />
         </div>
       </div>

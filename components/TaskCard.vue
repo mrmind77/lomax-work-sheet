@@ -14,7 +14,11 @@ const props = defineProps({
 
 const task = ref(props.modelValue);
 
-const emitter = defineEmits(["update:modelValue"]);
+const emitter = defineEmits(["update:modelValue", "remove"]);
+
+const handleRemove = () => {
+  emitter("remove", task.id);
+};
 
 watch(
   task,
@@ -27,6 +31,13 @@ watch(
 <template>
   <div class="md:hidden space-y-4">
     <div class="bg-white shadow-md rounded-lg p-4 border border-gray-300">
+      <button
+        type="button"
+        class="w-8 h-8 flex justify-center items-center rounded-full bg-red-600 text-white mb-4"
+        @click="handleRemove"
+      >
+        <Icon name="material-symbols-light:delete" size="18" />
+      </button>
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Task</label>
