@@ -42,6 +42,7 @@ const workOrder = ref({
   ],
   tests: [
     {
+      id: 0,
       name: "",
       description: "",
       result: "",
@@ -94,6 +95,20 @@ const addAssistant = () => {
 
 const removeAssistant = (id) => {
   workOrder.value.assistants = workOrder.value.assistants.filter((a) => a.id !== id);
+};
+
+const addTest = () => {
+  workOrder.value.tests.push({
+    id: workOrder.value.tests.length,
+    name: "",
+    dpi: "",
+    attended: false,
+    observations: "",
+  });
+};
+
+const removeTest = (id) => {
+  workOrder.value.tests = workOrder.value.tests.filter((a) => a.id !== id);
 };
 </script>
 <template>
@@ -180,35 +195,25 @@ const removeAssistant = (id) => {
       </div>
 
       <div v-if="workOrder.head.workType === 'verification-tests'" class="space-y-4">
-        <h2 class="text-primary text-lg font-bold">Verification Tests</h2>
-        <table class="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th class="border border-gray-300 p-2">Test Name</th>
-              <th class="border border-gray-300 p-2">Description</th>
-              <th class="border border-gray-300 p-2">Result</th>
-              <th class="border border-gray-300 p-2">Expected Result</th>
-              <th class="border border-gray-300 p-2">Status</th>
-              <th class="border border-gray-300 p-2">Observations</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td>
-                <select class="border border-gray-300 p-2">
-                  <option value="failure">Failure</option>
-                  <option value="successful">Successful</option>
-                  <option value="warning">Warning</option>
-                </select>
-              </td>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 class="text-primary text-lg font-bold">
+          Verification Tests
+          <button
+            type="button"
+            class="bg-primary text-white rounded-full w-8 h-8 justify-center items-center"
+            @click="addTest"
+          >
+            <Icon name="material-symbols:add-task-rounded" size="18" />
+          </button>
+        </h2>
+        
+        <TestTable v-model="workOrder.tests"/>
+
+        <TestCard
+          v-for="(test, index) in workOrder.tests"
+          :key="`tests_card_${index}`"
+          v-model="workOrder.tests[index]"
+          v-on:remove="removeTest"
+        />
       </div>
 
       <!-- Section 3: General Observations -->
