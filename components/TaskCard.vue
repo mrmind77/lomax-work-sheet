@@ -7,6 +7,7 @@ const props = defineProps({
         description: "",
         status: "",
         observations: "",
+        id: 0,
       };
     },
   },
@@ -19,6 +20,7 @@ const emitter = defineEmits(["update:modelValue", "remove"]);
 const handleRemove = () => {
   emitter("remove", task.id);
 };
+  
 
 watch(
   task,
@@ -61,9 +63,8 @@ watch(
             class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             v-model="task.status"
           >
-            <option value="" selected disabled>Choose status</option>
-            <option value="done">Done</option>
             <option value="pending">Pending</option>
+            <option value="done">Done</option>
             <option value="canceled">Canceled</option>
             <option value="in-progress">In Progress</option>
           </select>

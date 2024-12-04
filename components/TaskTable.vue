@@ -6,9 +6,9 @@ const props = defineProps({
         {
           task: "",
           description: "",
-          status: "",
+          status: "pending",
           observations: "",
-          id: "",
+          id: 0,
         },
       ];
     },
@@ -26,13 +26,16 @@ const handleRemove = (id) => {
 watch(
   tasks,
   (oldData, newData) => {
-    emitter("update:modelValue", tasks.value);
+    emitter("update:modelValue", tasks);
   },
   { deep: true }
 );
 </script>
 <template>
   <table class="w-full border-collapse border border-gray-300 bg-white shadow-md hidden md:table">
+    <caption>
+      <em>{{ tasks.map((t) => `${t.id} == ${t.status}`) }}</em>
+    </caption>
     <thead>
       <tr class="bg-gray-200">
         <th class="border border-gray-300 p-3 text-left">Task</th>

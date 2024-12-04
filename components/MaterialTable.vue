@@ -10,7 +10,7 @@ const props = defineProps({
           quantity: "",
           description: "",
           observations: "",
-          id: "",
+          id: 0,
         },
       ];
     },

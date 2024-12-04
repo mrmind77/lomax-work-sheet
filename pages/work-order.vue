@@ -13,7 +13,7 @@ const workOrder = ref({
   },
   materials: [
     {
-      id: "",
+      id: 0,
       brand: "",
       model: "",
       sku: "",
@@ -25,10 +25,10 @@ const workOrder = ref({
   assistants: [],
   tasks: [
     {
-      id: "",
+      id: 0,
       task: "",
       description: "",
-      status: "",
+      status: "pending",
       observations: "",
     },
   ],
@@ -55,7 +55,7 @@ const addTask = () => {
   workOrder.value.tasks.push({
     task: "",
     description: "",
-    status: "",
+    status: "pending",
     observations: "",
     id: workOrder.value.tasks.length,
   });
