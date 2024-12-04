@@ -33,9 +33,6 @@ watch(
 </script>
 <template>
   <table class="w-full border-collapse border border-gray-300 bg-white shadow-md hidden md:table">
-    <caption>
-      <em>{{ tasks.map((t) => `${t.id} == ${t.status}`) }}</em>
-    </caption>
     <thead>
       <tr class="bg-gray-200">
         <th class="border border-gray-300 p-3 text-left">Task</th>

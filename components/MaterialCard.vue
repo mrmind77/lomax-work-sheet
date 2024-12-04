@@ -15,21 +15,11 @@ const props = defineProps({
   },
 });
 
-const material = ref(props.modelValue);
-
-const emitter = defineEmits(["update:modelValue", "remove"]);
+const emitter = defineEmits(["remove"]);
 
 const handleRemove = () => {
-  emitter("remove", material.value.id);
+  emitter("remove", props.modelValue.value.id);
 };
-
-watch(
-  material,
-  (newData, oldData) => {
-    emitter("update:modelValue", material);
-  },
-  { deep: true }
-);
 </script>
 <template>
   <div class="md:hidden space-y-4">
@@ -47,7 +37,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="material.brand"
+            v-model="modelValue.brand"
           />
         </div>
         <div>
@@ -55,7 +45,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="material.model"
+            v-model="modelValue.model"
           />
         </div>
         <div>
@@ -63,7 +53,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="material.sku"
+            v-model="modelValue.sku"
           />
         </div>
         <div>
@@ -71,7 +61,7 @@ watch(
           <input
             type="number"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="material.quantity"
+            v-model="modelValue.quantity"
           />
         </div>
         <div class="col-span-2">
@@ -79,7 +69,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="material.description"
+            v-model="modelValue.description"
           />
         </div>
         <div class="col-span-2">
@@ -87,7 +77,7 @@ watch(
           <input
             type="text"
             class="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="material.observations"
+            v-model="modelValue.observations"
           />
         </div>
       </div>

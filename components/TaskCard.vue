@@ -13,22 +13,11 @@ const props = defineProps({
   },
 });
 
-const task = ref(props.modelValue);
-
-const emitter = defineEmits(["update:modelValue", "remove"]);
+const emitter = defineEmits(["remove"]);
 
 const handleRemove = () => {
-  emitter("remove", task.id);
+  emitter("remove", props.modelValue.value.id);
 };
-  
-
-watch(
-  task,
-  (oldData, newData) => {
-    emitter("update:modelValue", task);
-  },
-  { deep: true }
-);
 </script>
 <template>
   <div class="md:hidden space-y-4">
@@ -46,7 +35,7 @@ watch(
           <input
             type="text"
             class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="task.task"
+            v-model="modelValue.task"
           />
         </div>
         <div>
@@ -54,14 +43,14 @@ watch(
           <input
             type="text"
             class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="task.description"
+            v-model="modelValue.description"
           />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
           <select
             class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="task.status"
+            v-model="modelValue.status"
           >
             <option value="pending">Pending</option>
             <option value="done">Done</option>
@@ -74,7 +63,7 @@ watch(
           <input
             type="text"
             class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="task.observation"
+            v-model="modelValue.observations"
           />
         </div>
       </div>
