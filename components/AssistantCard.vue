@@ -3,11 +3,11 @@ const props = defineProps({
   modelValue: {
     default() {
       return {
-        task: "",
-        description: "",
-        status: "",
-        observations: "",
         id: 0,
+    name: "",
+    dpi: "",
+    attended: false,
+    observations: "",
       };
     },
   },
@@ -31,32 +31,33 @@ const handleRemove = () => {
       </button>
       <div class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Task</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
           <input
             type="text"
             class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="modelValue.task"
+            v-model="modelValue.name"
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">DPI</label>
           <input
             type="text"
             class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="modelValue.description"
+            v-model="modelValue.dpi"
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-          <select
-            class="block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            v-model="modelValue.status"
-          >
-            <option value="pending">Pending</option>
-            <option value="done">Done</option>
-            <option value="canceled">Canceled</option>
-            <option value="in-progress">In Progress</option>
-          </select>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Attended</label>
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="attendedCheckbox"
+              class="w-5 h-5 text-blue-500 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              v-model="modelValue.attended"
+              :value="true"
+            />
+            <label for="attendedCheckbox" class="ml-2 text-gray-700">Attended</label>
+          </div>
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Observations</label>

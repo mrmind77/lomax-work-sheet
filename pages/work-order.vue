@@ -22,7 +22,15 @@ const workOrder = ref({
       observations: "",
     },
   ],
-  assistants: [],
+  assistants: [
+    {
+      id: 0,
+      name: "",
+      dpi: "",
+      attended: false,
+      observations: "",
+    },
+  ],
   tasks: [
     {
       id: 0,
@@ -32,7 +40,16 @@ const workOrder = ref({
       observations: "",
     },
   ],
-  tests: [],
+  tests: [
+    {
+      name: "",
+      description: "",
+      result: "",
+      expectedResult: "",
+      isSuccess: false,
+      observations: "",
+    },
+  ],
 });
 
 const addMaterial = () => {
@@ -63,6 +80,20 @@ const addTask = () => {
 
 const removeTask = (id) => {
   workOrder.value.tasks = workOrder.value.tasks.filter((t) => t.id !== id);
+};
+
+const addAssistant = () => {
+  workOrder.value.assistants.push({
+    id: workOrder.value.assistants.length,
+    name: "",
+    dpi: "",
+    attended: false,
+    observations: "",
+  });
+};
+
+const removeAssistant = (id) => {
+  workOrder.value.assistants = workOrder.value.assistants.filter((a) => a.id !== id);
 };
 </script>
 <template>
@@ -127,28 +158,25 @@ const removeTask = (id) => {
       </div>
 
       <div v-if="workOrder.head.workType === 'capacitation'" class="space-y-4">
-        <h2 class="text-primary text-lg font-bold">Assistants</h2>
-        <table class="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th class="border border-gray-300 p-2">Name</th>
-              <th class="border border-gray-300 p-2">DPI</th>
-              <th class="border border-gray-300 p-2">Assist</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td><input type="text" class="border border-gray-300 p-2" /></td>
-              <td>
-                <select class="border border-gray-300 p-2">
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 class="text-primary text-lg font-bold flex justify-between">
+          Assistants
+          <button
+            type="button"
+            class="bg-primary text-white rounded-full w-8 h-8 justify-center items-center"
+            @click="addAssistant"
+          >
+            <Icon name="material-symbols:add-task-rounded" size="18" />
+          </button>
+        </h2>
+
+        <AssistantTable v-model="workOrder.assistants" />
+
+        <AssistantCard
+          v-for="(assistant, index) in workOrder.assistants"
+          :key="`assistant_card_${index}`"
+          v-model="workOrder.assistants[index]"
+          v-on:remove="removeAssistant"
+        />
       </div>
 
       <div v-if="workOrder.head.workType === 'verification-tests'" class="space-y-4">

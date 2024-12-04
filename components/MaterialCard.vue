@@ -18,7 +18,7 @@ const props = defineProps({
 const emitter = defineEmits(["remove"]);
 
 const handleRemove = () => {
-  emitter("remove", props.modelValue.value.id);
+  emitter("remove", props.modelValue.id);
 };
 </script>
 <template>
