@@ -8,6 +8,7 @@ const props = defineProps({
           description: "",
           status: "",
           observations: "",
+          id: "",
         },
       ];
     },
@@ -18,10 +19,14 @@ const tasks = ref(props.modelValue);
 
 const emitter = defineEmits(["update:modelValue"]);
 
+const handleRemove = (id) => {
+  tasks.value = tasks.value.filter((task) => task.id !== id);
+};
+
 watch(
   tasks,
   (oldData, newData) => {
-    emitter("update:modelValue", tasks);
+    emitter("update:modelValue", tasks.value);
   },
   { deep: true }
 );
@@ -34,6 +39,7 @@ watch(
         <th class="border border-gray-300 p-3 text-left">Description</th>
         <th class="border border-gray-300 p-3 text-left">Status</th>
         <th class="border border-gray-300 p-3 text-left">Observation</th>
+        <th class="border border-gray-300 p-3 text-left"></th>
       </tr>
     </thead>
     <tbody>
@@ -57,9 +63,8 @@ watch(
             class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             v-model="task.status"
           >
-            <option value="" selected disabled>Choose status</option>
-            <option value="done">Done</option>
             <option value="pending">Pending</option>
+            <option value="done">Done</option>
             <option value="canceled">Canceled</option>
             <option value="in-progress">In Progress</option>
           </select>
@@ -70,6 +75,15 @@ watch(
             class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             v-model="task.observations"
           />
+        </td>
+        <td class="border border-gray-300 p-2 flex justify-center items-center">
+          <button
+            type="button"
+            class="w-8 h-8 flex justify-center items-center rounded-full bg-red-600 text-white mb-4"
+            @click="handleRemove(task.id)"
+          >
+            <Icon name="material-symbols-light:delete" size="18" />
+          </button>
         </td>
       </tr>
     </tbody>

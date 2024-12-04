@@ -57,7 +57,7 @@ const addTask = () => {
     description: "",
     status: "",
     observations: "",
-    id: workOrder.value.materials.length,
+    id: workOrder.value.tasks.length,
   });
 };
 
@@ -106,7 +106,11 @@ const removeTask = (id) => {
       <div v-if="workOrder.head.workType === 'support'" class="space-y-4">
         <h2 class="text-primary text-lg font-bold flex justify-between">
           Tasks
-          <button type="button" class="bg-primary text-white rounded-full w-8 h-8 justify-center items-center">
+          <button
+            type="button"
+            class="bg-primary text-white rounded-full w-8 h-8 justify-center items-center"
+            @click="addTask"
+          >
             <Icon name="material-symbols:add-task-rounded" size="18" />
           </button>
         </h2>

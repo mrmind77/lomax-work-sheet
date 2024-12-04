@@ -10,6 +10,7 @@ const props = defineProps({
           quantity: "",
           description: "",
           observations: "",
+          id: "",
         },
       ];
     },
@@ -20,13 +21,9 @@ const materials = ref(props.modelValue);
 
 const emitter = defineEmits(["update:modelValue"]);
 
-// watch(
-//   props.modelValue,
-//   (newData, oldData) => {
-//     materials.value = props.modelValue;
-//   },
-//   { deep: true }
-// );
+const handleRemove = (id) => {
+  materials.value = materials.value.filter((material) => material.id !== id);
+};
 
 watch(
   materials,
@@ -47,6 +44,7 @@ watch(
         <th class="border border-gray-300 p-3 text-left">Quantity</th>
         <th class="border border-gray-300 p-3 text-left">Description</th>
         <th class="border border-gray-300 p-3 text-left">Observations</th>
+        <th class="border border-gray-300 p-3 text-left"></th>
       </tr>
     </thead>
     <tbody>
@@ -92,6 +90,15 @@ watch(
             class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             v-model="material.observations"
           />
+        </td>
+        <td class="border border-gray-300 p-2 flex justify-center items-center">
+          <button
+            type="button"
+            class="w-8 h-8 flex justify-center items-center rounded-full bg-red-600 text-white mb-4"
+            @click="handleRemove(material.id)"
+          >
+            <Icon name="material-symbols-light:delete" size="18" />
+          </button>
         </td>
       </tr>
     </tbody>
